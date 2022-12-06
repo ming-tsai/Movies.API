@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Movies.Core\Movies.Core.csproj" />
+    <ProjectReference Include="..\Movies.Core\Movies.Domain.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -9,5 +10,4 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
 </Project>
