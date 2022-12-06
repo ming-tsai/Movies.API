@@ -84,17 +84,36 @@ public class MovieService : BaseService, IMovieService
         return result;
     }
 
-    public async Task<MovieResponse?> DisableAsync(MovieDeleteRequest request)
+    public Task<MovieResponse?> UpdateAsync(int movieId, MoviePatchRequest request)
+    {
+        return UpdateDataAsync(movieId, request);
+    }
+
+    public Task<MovieResponse?> DisableAsync(int movieId, AuditableRequest request)
+    {
+        Check.NotNull(request, nameof(request));
+        return UpdateDataAsync(movieId, new MoviePatchRequest()
+        {
+            IsEnabled = false,
+            User = request.User
+        });
+    }
+
+    private async Task<MovieResponse?> UpdateDataAsync(int movieId, MoviePatchRequest request)
     {
         Check.NotNull(request, nameof(request));
         var data = await DbContext
                             .Movies!
-                            .FirstOrDefaultAsync(m => m.Id == request.Id)
+                            .FirstOrDefaultAsync(m => m.Id == movieId)
                             .ConfigureAwait(false);
         MovieResponse? result = null;
         if (data != null)
         {
-            data.IsEnabled = false;
+            data.Name = request.Name ?? data.Name!;
+            data.Description = request.Description ?? data.Description!;
+            data.Type = request.Type ?? data.Type!;
+            data.ReleaseDate = request.ReleaseDate ?? data.ReleaseDate;
+            data.IsEnabled = request.IsEnabled ?? data.IsEnabled;
             data.User = request.User;
             await DbContext.SaveChangesAsync().ConfigureAwait(false);
             result = MapToResponse(data);

@@ -7,6 +7,7 @@ public interface IMovieService
 {
     Task<Response<MovieResponse>?> GetAsync(MovieGetRequest request);
     Task<Response<MovieReviewResponse>?> GetReviewsAsync(int movieId, GetRequest request);
-    Task<MovieResponse?> DisableAsync(MovieDeleteRequest request);
     Task<MovieResponse?> CreateAsync(MoviePostRequest request);
+    Task<MovieResponse?> UpdateAsync(int movieId, MoviePatchRequest request);
+    Task<MovieResponse?> DisableAsync(int movieId, AuditableRequest request);
 }
