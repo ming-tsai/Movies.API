@@ -46,7 +46,7 @@ public class MovieService : BaseService, IMovieService
         var nameFilter = query!.Where(nameof(Movie.Name), request.Name);
         var descriptionFilter = nameFilter!.Where(nameof(Movie.Description), request.Description);
         var typeFilter = descriptionFilter!.Where(nameof(Movie.Type), request.Type);
-        return ApplyReleaseDateFilter(typeFilter, request.ReleaseDate);
+        return ApplyReleaseDateFilter(typeFilter, request.ReleaseDate).OrderBy(request.Sort);
     }
 
     private static IQueryable<Movie> ApplyReleaseDateFilter(IQueryable<Movie> query, DateTime? date)
@@ -139,7 +139,7 @@ public class MovieService : BaseService, IMovieService
     public async Task<Response<MovieReviewResponse>?> GetReviewsAsync(int movieId, GetRequest request)
     {
         Check.NotNull(request, nameof(request));
-        var query = DbContext.MovieReviews!.Where(mr => mr.MovieId == movieId);
+        var query = DbContext.MovieReviews!.Where(mr => mr.MovieId == movieId).OrderBy(request.Sort);
         Response<MovieReviewResponse>? result = null;
         if (await query.AnyAsync().ConfigureAwait(false))
         {

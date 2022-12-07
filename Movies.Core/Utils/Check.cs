@@ -8,7 +8,7 @@ namespace Movies.Core.Utils
 {
     public static class Check
     {
-        public static T NotNull<T>([DisallowNull, NotNull] T value, [NotNull] string parameterName)
+        public static T NotNull<T>([DisallowNull, NotNull] T? value, [NotNull] string parameterName)
         {
             if (value == null)
             {
