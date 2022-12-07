@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Movies.Core.Requests;
-public abstract class GetRequest
+public class GetRequest
 {
     [NotMapped]
     [Range(1, int.MaxValue, ErrorMessage = "Page index should be greater than 0")]

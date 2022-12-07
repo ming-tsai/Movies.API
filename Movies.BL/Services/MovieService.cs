@@ -121,7 +121,7 @@ public class MovieService : BaseService, IMovieService
         return result;
     }
 
-    public MovieResponse MapToResponse(Movie movie)
+    public static MovieResponse MapToResponse(Movie movie)
     {
         Check.NotNull(movie, nameof(movie));
         return new MovieResponse()
@@ -161,7 +161,7 @@ public class MovieService : BaseService, IMovieService
         return result;
     }
 
-    public MovieReviewResponse MapToResponse(MovieReview review)
+    public static MovieReviewResponse MapToResponse(MovieReview review)
     {
         Check.NotNull(review, nameof(review));
         return new MovieReviewResponse()

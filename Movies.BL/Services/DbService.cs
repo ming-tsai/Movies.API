@@ -9,11 +9,13 @@ using Movies.Domain.Migrations;
 namespace Movies.BL.Interfaces;
 public class BaseService
 {
-    protected AppDbContext DbContext { get; private set; }
+    protected readonly AppDbContext DbContext;
+    protected readonly ILogger<BaseService>? _logger;
     public BaseService(
-        [NotNull]AppDbContext dbContext,
-        [AllowNull]ILogger<BaseService>? logger)
+        [NotNull] AppDbContext dbContext,
+        [AllowNull] ILogger<BaseService>? logger)
     {
         DbContext = dbContext;
+        _logger = logger;
     }
 }
