@@ -211,6 +211,7 @@ public class MovieService : BaseService, IMovieService
         Check.NotNull(review, nameof(review));
         return new MovieReviewResponse()
         {
+            Id = review.Id,
             Rating = review.Rating,
             Comment = review.Comment,
             UpdatedAt = review.UpdatedAt,

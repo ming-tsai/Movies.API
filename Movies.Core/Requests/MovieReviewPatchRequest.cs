@@ -5,6 +5,6 @@ public class MovieReviewPatchRequest : AuditableRequest
 {
     [StringLength(10000, MinimumLength = 10)]
     public string? Comment { get; set; }
-    [Range(0.01, 5)]
+    [Range(0, 5)]
     public decimal Rating { get; set; }
 }

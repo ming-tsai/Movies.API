@@ -85,7 +85,7 @@ public class MoviesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status202Accepted)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CreateReviewAsync(
-        [FromRoute] int movieId, [FromQuery] MovieReviewPostRequest request)
+        [FromRoute] int movieId, [FromBody] MovieReviewPostRequest request)
     {
         IActionResult result = Accepted((string)"The review is already added.");
         var response = await _service.CreateReviewAsync(movieId, request).ConfigureAwait(false);
@@ -101,7 +101,7 @@ public class MoviesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status202Accepted)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> UpdateReviewAsync(
-        [FromRoute] int reviewId, [FromQuery] MovieReviewPatchRequest request)
+        [FromRoute] int reviewId, [FromBody] MovieReviewPatchRequest request)
     {
         IActionResult result = Accepted((string)"The review does not exists.");
         var response = await _service.UpdateReviewAsync(reviewId, request).ConfigureAwait(false);
