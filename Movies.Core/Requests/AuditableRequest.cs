@@ -4,6 +4,6 @@ namespace Movies.Core.Requests;
 public class AuditableRequest
 {
     [Required]
-    [StringLength(300, MinimumLength = 10)]
+    [StringLength(300, MinimumLength = 5)]
     public string? User { get; set; }
 }

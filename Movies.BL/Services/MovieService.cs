@@ -161,6 +161,51 @@ public class MovieService : BaseService, IMovieService
         return result;
     }
 
+    public async Task<MovieReviewResponse?> CreateReviewAsync(int movieId, MovieReviewPostRequest request)
+    {
+        Check.NotNull(request, nameof(request));
+        MovieReviewResponse? result = null;
+        var isExists = await DbContext
+                                .Movies!
+                                    .Include(m => m.Reviews)
+                                .AnyAsync(m => m.Id == movieId &&
+                                    !m.Reviews!.Any(r => r.User == request.User))
+                                .ConfigureAwait(false);
+        if (isExists)
+        {
+            var review = new MovieReview()
+            {
+                Comment = request.Comment,
+                MovieId = movieId,
+                Rating = request.Rating,
+                User = request.User
+            };
+            await DbContext.AddAsync(review).ConfigureAwait(false);
+            await DbContext.SaveChangesAsync().ConfigureAwait(false);
+            result = MapToResponse(review);
+        }
+        return result;
+    }
+
+    public async Task<MovieReviewResponse?> UpdateReviewAsync(
+        int reviewId, MovieReviewPatchRequest request)
+    {
+        Check.NotNull(request, nameof(request));
+        MovieReviewResponse? result = null;
+        var data = await DbContext
+                                .MovieReviews!
+                                .FirstOrDefaultAsync(m => m.Id == reviewId)
+                                .ConfigureAwait(false);
+        if (data != null)
+        {
+            data.Comment = request.Comment;
+            data.Rating = request.Rating;
+            await DbContext.SaveChangesAsync().ConfigureAwait(false);
+            result = MapToResponse(data);
+        }
+        return result;
+    }
+
     public static MovieReviewResponse MapToResponse(MovieReview review)
     {
         Check.NotNull(review, nameof(review));

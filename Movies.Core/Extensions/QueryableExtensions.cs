@@ -42,7 +42,7 @@ public static class QueryableExtensions
         var param = Expression.Parameter(typeof(TSource));
         var isDescending = sorting.EndsWith("desc", StringComparison.CurrentCultureIgnoreCase) ||
                     sorting.EndsWith("descending", StringComparison.CurrentCultureIgnoreCase);
-        var propertyName = string.Empty;
+        var propertyName = sorting;
         if (sorting.Contains("_", StringComparison.OrdinalIgnoreCase))
         {
             propertyName = sorting.Substring(0, sorting.IndexOf("_", StringComparison.OrdinalIgnoreCase));

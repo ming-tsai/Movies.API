@@ -10,7 +10,7 @@ public class MovieReview : Auditable
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
     public int MovieId { get; set; }
-    public int Rating { get; set; }
+    public decimal Rating { get; set; }
     public string? Comment { get; set; }
     [ForeignKey(nameof(MovieId))]
     public virtual Movie? Movie { get; set; }
